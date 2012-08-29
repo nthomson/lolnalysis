@@ -1,0 +1,108 @@
+html{
+	background: url('../img/backgrounds/dust.png'), repeat;
+	font-family: "Trebuchet MS", sans-serif;
+	font-size: 15px;
+	color: #555;
+	margin: 0 25px;
+}
+
+body {
+  background: transparent;
+}
+
+a{
+	color: #08c;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline
+}
+
+.loading {
+	background: url('http://nick.kanicweb.com/projects/baseline/img/loading.gif') no-repeat center #fff !important;
+}
+
+.game .overview, .game .detail{
+	width: 950px;
+	overflow: auto;
+	margin: 10px auto;
+	padding: 10px 25px;
+	background: #fff;
+	border: 1px #ddd solid;
+}
+
+.game .overview {
+	height: 115px;
+	width: 115px;
+}
+
+.game .overview .contain {
+	display: none;
+}
+
+.game .detail {
+	height: 700px;
+	display: none;
+	padding: 0px;
+	width: 1000px;
+}
+
+.game .detail .contain {
+	margin: 25px;
+	height: 650px;
+}
+
+.game .detail .portrait {
+	float: left;
+}
+
+.game .detail .portrait img {
+	height: 90px;
+	width: 90px;
+}
+
+.game .detail .name {
+	float: left;
+	font-size: 42px;
+	margin-left: 25px;
+	line-height: 90px;
+	margin-bottom: 20px;
+}
+
+.game .detail .metrics {
+	clear: both;
+	width: 100%;
+	height: 340px;
+}
+
+ul.team {
+	float: left;
+	list-style-type: none;
+}
+
+#team2 {
+	float: right;
+}
+
+ul.team li {
+	float: left;
+	margin: 5px;
+}
+
+span.vs {
+	float: left;
+	text-align: center;
+	width: 250px;
+	line-height: 75px;
+}
+
+.outcome {
+	text-align: center;
+	color: green;
+}
+
+p.download {
+	text-align:right;
+	clear: both;
+}
+

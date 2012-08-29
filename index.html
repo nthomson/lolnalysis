@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LoL Replay Analysis</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script src="js/lolreader.js"></script>
+	<script>
+		$(document).ready(function(){
+
+			replay_path = getParameterByName("replay");
+			if(!replay_path){
+				replay_path = 'http://nick.kanicweb.com/projects/lolreader/replays/testreplay.lrf'
+			}
+			url = 'http://kanicweb.com:8080/?callback=?&url='+replay_path;
+
+			$.getJSON(url, function(replay){
+				var game = new LolGame(replay);
+				game.initialize_overview('.overview', '.detail');
+			});
+
+		});
+		function getParameterByName(name){
+			name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+			var regexS = "[\\?&]" + name + "=([^&#]*)";
+			var regex = new RegExp(regexS);
+			var results = regex.exec(window.location.search);
+			if(results == null)
+				return "";
+			else
+				return decodeURIComponent(results[1].replace(/\+/g, " "));
+		}
+	</script>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.6.0/build/cssreset/cssreset-min.css">
+	<link rel="stylesheet" type="text/css" href="css/lolreader.css" />
+</head>
+<body>
+	<div class='game'>
+		<div class='overview loading'>
+			<div class='contain'>
+				<div class='outcome'></div>
+				<ul id="team1" class='team'></ul><span class='vs'>vs</span><ul id="team2" class='team'></ul>
+				<p class='download'><a class='download' href=''>Download Replay</a></p>
+			</div>
+		</div>
+		<div class='detail'>
+			<div class='contain'>
+				<div class='portrait'><img src='' /></div>
+				<div class='name'></div>
+				<div class='metrics'></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
