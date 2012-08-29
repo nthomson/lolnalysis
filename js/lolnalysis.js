@@ -30,7 +30,7 @@ function LolGame(replay) {
                 });
             });
         });
-    }
+    };
     
     function get_player_by_summoner_name(summoner_name, players) {
         for(var i = 0; i < players.length; i++){
@@ -43,8 +43,8 @@ function LolGame(replay) {
     function update_metrics(metrics, metrics_selector) {
         $.each(metrics, function(index, metric){
             if ($(metrics_selector).find('.'+metric.name+' .bar').length > 0) {
-                $(metrics_selector).find('.'+metric.name+' .val').html(metric.value);
-                $(metrics_selector).find('.'+metric.name+' .max').html(metric.max);
+                $(metrics_selector).find('.'+metric.name+' .val').html(addCommas(metric.value));
+                $(metrics_selector).find('.'+metric.name+' .max').html(addCommas(metric.max));
                 $(metrics_selector).find('.'+metric.name+' .bar').css('width', metric.percent+'%');
                 $('.metrics .'+metric.name).removeClass('progress-success progress-warning progress-danger').addClass(this.extra_class);
             }
@@ -105,41 +105,40 @@ function LolGame(replay) {
                 }
             }
             this.percent = ((this.value/this.max) * 100.0) | 0;
-            if(!this.reverse_colors){
-                if(this.percent > 75){
-                    this.extra_class = "progress-success"
-                }
-                else if(this.percent > 50) {
-                    this.extra_class = "progress-warning"
-                }
-                else {
-                    this.extra_class = "progress-danger"
-                }
+            if(this.percent >= 75){
+                this.extra_class = !this.reverse_colors ? "progress-success" : "progress-danger";
+            }
+            else if(this.percent >= 25) {
+                this.extra_class = "progress-warning";
             }
             else {
-                if(this.percent > 75){
-                    this.extra_class = "progress-danger"
-                }
-                else if(this.percent > 50) {
-                    this.extra_class = "progress-warning"
-                }
-                else {
-                    this.extra_class = "progress-success"
-                }
+                this.extra_class = !this.reverse_colors ? "progress-danger" : "progress-success";
             }
-            
-            //TODO
+                        
             this.bar_out = function(){
                 var bar_perc = this.percent;
                 var bar_class = "progress " + this.extra_class;
-                return '<div class="'+this.name+'">{0}: <span class="val">{1}</span>/<span class="max">{2}</span><div class="{3} {4}"><div class="bar" style="width: {5}%"></div></div></div>'.format(this.label, this.value, this.max, bar_class, this.name, this.percent);
+                return '<div class="'+this.name+'">{0}: <span class="val">{1}</span>/<span class="max">{2}</span><div class="{3} {4}"><div class="bar" style="width: {5}%"></div></div></div>'
+                    .format(this.label, addCommas(this.value), addCommas(this.max), bar_class, this.name, this.percent);
             }
-        }
+        };
         var metrics = new Array();
         for(var i = 0; i < metric_list.length; i++){
             metrics.push(new Metric(players, player, metric_list[i]));
         }
         return metrics;
+    }
+
+    function addCommas(mStr) {
+        var x = ('' + mStr).split('.');
+        var x1 = x[0];
+        var x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        console.log(x1);
+        return x1 + x2;
     }
     
     String.prototype.format = function() {
